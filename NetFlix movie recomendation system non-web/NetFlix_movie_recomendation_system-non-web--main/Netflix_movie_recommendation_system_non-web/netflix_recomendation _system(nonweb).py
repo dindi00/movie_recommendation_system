@@ -86,7 +86,7 @@ def calculate_accuracy(test_movie_titles):
     correct_recommendations = 0
     total_recommendations = 0
 
-    # Evaluate each test movie title
+    # Evaluate each test movie title using confusion matrix
     for title in test_movie_titles:
         recommended_movies = recommand(title)
         if recommended_movies:
