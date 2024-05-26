@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Movie Recommendation System
 """
@@ -22,17 +21,17 @@ print(movies.columns)
 
 print("\n" + "-" * 80 + "\n")
 
-# Feature selection
+# Select relevant features for movie recommendation
 movies = movies[['id', 'title', 'overview', 'genre']]
-movies['tags'] = movies['overview'] + movies['genre']
-newdata = movies.drop(columns=['overview', 'genre'])
+movies['tags'] = movies['overview'] + movies['genre']  # Combine 'overview' and 'genre' into a single 'tags' column
+newdata = movies.drop(columns=['overview', 'genre'])   # Drop original 'overview' and 'genre' columns
 
 print("-------------------------------MOVIE RECOMMENDATION SYSTEM-------------------------------")
 print("\n")
 
 # Text vectorization using CountVectorizer
 cv = CountVectorizer(max_features=10000, stop_words='english')
-vector = cv.fit_transform(newdata['tags'].values.astype('U')).toarray()
+vector = cv.fit_transform(newdata['tags'].values.astype('U')).toarray()  # Convert text data to vector
 print("Vectorized data shape:", vector.shape)
 
 print("\n" + "-" * 80 + "\n")
@@ -51,7 +50,7 @@ def recommand(movie_title):
     Returns:
         list: A list of recommended movie titles, or None if no recommendations are found.
     """
-    index = newdata[newdata['title'] == movie_title].index
+    index = newdata[newdata['title'] == movie_title].index  # Find index of the input movie title
     if not index.empty:
         index = index[0]
         if index < len(similarity):
@@ -87,7 +86,7 @@ def calculate_accuracy(test_movie_titles):
     correct_recommendations = 0
     total_recommendations = 0
 
-    # confussion matrix 2 x 2 
+    # Evaluate each test movie title
     for title in test_movie_titles:
         recommended_movies = recommand(title)
         if recommended_movies:
@@ -183,4 +182,3 @@ def run_tests():
 
 if __name__ == '__main__':
     run_tests()
-
